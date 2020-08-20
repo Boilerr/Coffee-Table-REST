@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.sql.Timestamp;
+import java.util.Date;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -27,6 +29,7 @@ public class ProjectController {
 
     @PostMapping("/projects")
     public Project createProject(@Valid @RequestBody Project project) {
+        System.out.println(new Timestamp(new Date().getTime()) + "    request to: /projects");
         return projectRepository.save(project);
     }
 
