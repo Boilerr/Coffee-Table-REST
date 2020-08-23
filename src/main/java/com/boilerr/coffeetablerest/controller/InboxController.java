@@ -22,7 +22,7 @@ public class InboxController {
     private InboxRepository inboxRepository;
 
     @GetMapping("/inbox")
-    public Page<Inbox> getInboxs(Pageable pageable) {
+    public Page<Inbox> getInboxes(Pageable pageable) {
         return inboxRepository.findAll(pageable);
     }
 

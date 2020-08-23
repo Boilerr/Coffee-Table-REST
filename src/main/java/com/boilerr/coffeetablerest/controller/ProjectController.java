@@ -1,6 +1,4 @@
 package com.boilerr.coffeetablerest.controller;
-
-
 import com.boilerr.coffeetablerest.exception.ResourceNotFoundException;
 import com.boilerr.coffeetablerest.model.Project;
 import com.boilerr.coffeetablerest.repository.ProjectRepository;
@@ -13,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -24,6 +23,11 @@ public class ProjectController {
     @GetMapping("/projects")
     public Page<Project> getProjects(Pageable pageable) {
         return projectRepository.findAll(pageable);
+    }
+
+    @GetMapping("/projects/{projectId}")
+    public Optional<Project> getProject(@PathVariable Long projectId) {
+        return projectRepository.findById(projectId);
     }
 
 
