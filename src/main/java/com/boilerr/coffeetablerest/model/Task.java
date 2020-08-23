@@ -27,6 +27,11 @@ public class Task extends AuditModel {
     @JsonIgnore
     private Project project;
 
+
+    private Boolean flagged = false;
+    private Boolean active = false;
+
+
     public Long getId() {
         return id;
     }
@@ -50,4 +55,12 @@ public class Task extends AuditModel {
     public void setProject(Project project) {
         this.project = project;
     }
+
+    public Boolean getFlagged() { return flagged; }
+
+    public void setFlagged(Boolean flagged) { this.flagged = flagged; }
+
+    public Boolean getActive() { return active; }
+
+    public void setActive(Boolean active) { this.active = active; }
 }

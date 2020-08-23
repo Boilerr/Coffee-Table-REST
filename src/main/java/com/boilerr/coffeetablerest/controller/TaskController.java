@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -25,6 +26,16 @@ public class TaskController {
     public List<Task> getTasksByProjectId(@PathVariable Long projectId) {
         return taskRepository.findByProjectId(projectId);
     }
+
+    @GetMapping("/tasks/{taskId}")
+    public Optional<Task> getTask(@PathVariable Long taskId) {
+        return taskRepository.findById(taskId);
+    }
+
+    /*@GetMapping("/projects/{projectId}/tasks/{taskId}")
+    public Optional<Task> getTaskByProjectId(@PathVariable Long taskId) {
+        return taskRepository.findById(taskId);
+    }*/
 
     @PostMapping("/projects/{projectId}/tasks")
     public Task addTask(@PathVariable Long projectId,
@@ -51,6 +62,19 @@ public class TaskController {
                 }).orElseThrow(() -> new ResourceNotFoundException("Task not found with id " + taskId));
     }
 
+    @PutMapping("/tasks/{taskId}")
+    public Task updateTaskById(@PathVariable Long taskId, @Valid @RequestBody Task taskRequest) {
+        if(!taskRepository.existsById(taskId)) {
+            throw new ResourceNotFoundException("Task not found with id " + taskId);
+        }
+        return taskRepository.findById(taskId)
+                .map(task -> {
+                    task.setText(taskRequest.getText());
+                    return taskRepository.save(task);
+                }).orElseThrow(() -> new ResourceNotFoundException("Task not found with id " + taskId));
+    }
+
+
     @DeleteMapping("/projects/{projectId}/tasks/{taskId}")
     public ResponseEntity<?> deleteTask(@PathVariable Long projectId,
                                           @PathVariable Long taskId) {
@@ -65,4 +89,15 @@ public class TaskController {
                 }).orElseThrow(() -> new ResourceNotFoundException("Task not found with id " + taskId));
 
     }
+
+    @DeleteMapping("/tasks/{taskId}")
+    public ResponseEntity<?> deleteTaskById(@PathVariable Long taskId) {
+        return taskRepository.findById(taskId)
+                .map(task -> {
+                    taskRepository.delete(task);
+                    return ResponseEntity.ok().build();
+                }).orElseThrow(() -> new ResourceNotFoundException("Task not found with id " + taskId));
+
+    }
+
 }
