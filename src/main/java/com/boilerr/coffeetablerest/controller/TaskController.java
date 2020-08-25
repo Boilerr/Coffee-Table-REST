@@ -57,7 +57,8 @@ public class TaskController {
 
         return taskRepository.findById(taskId)
                 .map(task -> {
-                    task.setText(taskRequest.getText());
+                    task.setTitle(taskRequest.getTitle());
+                    task.setDescription(taskRequest.getDescription());
                     return taskRepository.save(task);
                 }).orElseThrow(() -> new ResourceNotFoundException("Task not found with id " + taskId));
     }
@@ -69,7 +70,8 @@ public class TaskController {
         }
         return taskRepository.findById(taskId)
                 .map(task -> {
-                    task.setText(taskRequest.getText());
+                    task.setTitle(taskRequest.getTitle());
+                    task.setDescription(taskRequest.getDescription());
                     return taskRepository.save(task);
                 }).orElseThrow(() -> new ResourceNotFoundException("Task not found with id " + taskId));
     }

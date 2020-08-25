@@ -5,6 +5,8 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "tasks")
@@ -18,8 +20,13 @@ public class Task extends AuditModel {
     )
     private Long id;
 
+    @NotBlank
+    @Size(min = 3, max = 100)
+    private String title;
+
     @Column(columnDefinition = "text")
-    private String text;
+    private String description;
+
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "project_id", nullable = false)
@@ -40,14 +47,6 @@ public class Task extends AuditModel {
         this.id = id;
     }
 
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
     public Project getProject() {
         return project;
     }
@@ -63,4 +62,21 @@ public class Task extends AuditModel {
     public Boolean getActive() { return active; }
 
     public void setActive(Boolean active) { this.active = active; }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }
+
