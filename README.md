@@ -18,7 +18,11 @@ http://localhost:8080/inbox
 http://localhost:8080/projects  
 http://localhost:8080/dailylog 
  
- 
+## Run .jar
+1. Gradle: build
+2. cd build/libs
+3. java -jar nameOfYour.jar
+
 ## Contributing
 We use GitHub Standard Fork & Pull Request Workflow  
 More details in Git.md
