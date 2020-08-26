@@ -4,6 +4,7 @@ import com.boilerr.coffeetablerest.exception.ResourceNotFoundException;
 import com.boilerr.coffeetablerest.model.Task;
 import com.boilerr.coffeetablerest.repository.ProjectRepository;
 import com.boilerr.coffeetablerest.repository.TaskRepository;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -72,6 +73,9 @@ public class TaskController {
                 .map(task -> {
                     task.setTitle(taskRequest.getTitle());
                     task.setDescription(taskRequest.getDescription());
+                    task.setTags(taskRequest.getTags());
+                    task.setFlagged(taskRequest.getFlagged());
+                    task.setActive(taskRequest.getActive());
                     return taskRepository.save(task);
                 }).orElseThrow(() -> new ResourceNotFoundException("Task not found with id " + taskId));
     }
