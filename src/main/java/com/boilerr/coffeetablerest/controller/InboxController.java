@@ -29,7 +29,7 @@ public class InboxController {
 
     @PostMapping("/inbox")
     public Inbox createInbox(@Valid @RequestBody Inbox inbox) {
-        System.out.println(new Timestamp(new Date().getTime()) + "    request to: /inbox");
+        // System.out.println(new Timestamp(new Date().getTime()) + "    request to: /inbox");
         return inboxRepository.save(inbox);
     }
 
