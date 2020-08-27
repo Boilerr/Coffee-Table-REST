@@ -4,14 +4,15 @@ import com.boilerr.coffeetablerest.exception.ResourceNotFoundException;
 import com.boilerr.coffeetablerest.model.Task;
 import com.boilerr.coffeetablerest.repository.ProjectRepository;
 import com.boilerr.coffeetablerest.repository.TaskRepository;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+
 import java.util.List;
 import java.util.Optional;
+
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -32,11 +33,11 @@ public class TaskController {
     public Optional<Task> getTask(@PathVariable Long taskId) {
         return taskRepository.findById(taskId);
     }
-
-    /*@GetMapping("/projects/{projectId}/tasks/{taskId}")
-    public Optional<Task> getTaskByProjectId(@PathVariable Long taskId) {
-        return taskRepository.findById(taskId);
-    }*/
+    
+    @GetMapping("/tasks")
+    public List<Task> getTasksByTag(@RequestParam String tag) {
+        return taskRepository.retrieveByTag(tag);
+    }
 
     @PostMapping("/projects/{projectId}/tasks")
     public Task addTask(@PathVariable Long projectId,
